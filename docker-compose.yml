@@ -1,45 +1,41 @@
-version: '3.7'
-
 services:
   web:
     restart: unless-stopped
     build:
       context: ./app
-      dockerfile: Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
+    env_file:
+      - .env.dev
+    command: python manage.py runserver 0.0.0.0:80
     volumes:
       - ./app/:/usr/src/app/
     ports:
-      - 8000:8000
-    env_file: ./.env.dev
+      - 80:80
     depends_on:
       - db
       - es
 
   db:
     restart: unless-stopped
-    image: postgres:12.0-alpine
+    build:
+      context: ./db
     expose:
       - 5432
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
     volumes:
       - pg_data:/var/lib/postgresql/data/
-      #- ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
-    environment:
-      - POSTGRES_USER=bloguser
-      - POSTGRES_PASSWORD=easypass
-      - POSTGRES_DB=blog
 
   es:
     image: elasticsearch:7.10.1
     ports:
       - 9200:9200
-      - 9300:9300
-    volumes:
-      - es_data:/usr/share/elasticsearch/data
+    # volumes:
+    #   - es_data:/usr/share/elasticsearch/data
+    # env_file: .env.es
     environment:
-      - "discovery.type=single-node"
+      - discovery.type=single-node
 
 volumes:
   pg_data:
-  es_data:
-    driver: local
+  # es_data:
+  #   driver: local

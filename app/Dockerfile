@@ -13,9 +13,7 @@ WORKDIR /usr/src/app
 COPY ./requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-# copy entrypoint.sh
-COPY ./entrypoint.sh .
 # copy project
 COPY . .
-# run entrypoint.sh
-ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
+CMD python manage.py migrate
+CMD python manage.py shell < init_es.py
