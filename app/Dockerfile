@@ -15,5 +15,4 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 # copy project
 COPY . .
-CMD python manage.py migrate
-CMD python manage.py shell < init_es.py
+CMD python manage.py migrate && python manage.py shell < init_es.py
