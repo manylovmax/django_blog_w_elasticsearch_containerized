@@ -6,8 +6,6 @@ services:
     env_file:
       - .env.dev
     command: python manage.py runserver 0.0.0.0:80
-    volumes:
-      - ./app/:/usr/src/app/
     ports:
       - 80:80
     depends_on:
@@ -20,22 +18,12 @@ services:
       context: ./db
     expose:
       - 5432
-    environment:
-      - "POSTGRES_HOST_AUTH_METHOD=trust"
-    volumes:
-      - pg_data:/var/lib/postgresql/data/
+    env_file:
+      - .env.db
 
   es:
     image: elasticsearch:7.10.1
     ports:
       - 9200:9200
-    # volumes:
-    #   - es_data:/usr/share/elasticsearch/data
-    # env_file: .env.es
     environment:
       - discovery.type=single-node
-
-volumes:
-  pg_data:
-  # es_data:
-  #   driver: local
