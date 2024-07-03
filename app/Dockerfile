@@ -5,8 +5,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Prevents Python from buffering stdout and stderr (equivalent to python -u option)
 ENV PYTHONUNBUFFERED 1
 # install psycopg2 dependencies
-RUN apk update \
-    && apk add postgresql-dev gcc python3-dev musl-dev
+RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
 # set work directory
 WORKDIR /usr/src/app
 # install dependencies
@@ -15,4 +14,4 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 # copy project
 COPY . .
-CMD python manage.py migrate && python manage.py shell < init_es.py
+CMD python manage.py migrate && python manage.py runserver 0.0.0.0:80

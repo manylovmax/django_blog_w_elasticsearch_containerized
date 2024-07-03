@@ -5,7 +5,6 @@ services:
       context: ./app
     env_file:
       - .env.dev
-    command: python manage.py runserver 0.0.0.0:80
     ports:
       - 80:80
     depends_on:
@@ -16,14 +15,10 @@ services:
     restart: unless-stopped
     build:
       context: ./db
-    expose:
-      - 5432
     env_file:
       - .env.db
 
   es:
     image: elasticsearch:7.10.1
-    ports:
-      - 9200:9200
     environment:
       - discovery.type=single-node

@@ -45,13 +45,7 @@ cd blog
 docker-compose up -d --build
 ```
 
-6. Migrate the database
-```shell
-cat dump/2018-05-22.sql | docker-compose exec -T db psql -U bloguser -W blog
-docker-compose exec web python manage.py migrate
-```
-
-7. Create the 'blog' index in Elasticsearch and index posts with init()
+6. Create the 'blog' index in Elasticsearch and index posts with init()
 ```shell
 docker-compose exec web python manage.py shell
 >>> from post.search import init
