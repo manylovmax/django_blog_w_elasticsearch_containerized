@@ -32,7 +32,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 cd /var
 mkdir www
 cd www
-git clone git@github.com:mmanylov/django_blog_real.git blog
+git clone git@github.com:manylovmax/django_blog_w_elasticsearch_containerized.git blog
 cd blog
 ```
 
